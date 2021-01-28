@@ -20,6 +20,9 @@ export default {
       step: 1,
     };
   },
+  mounted () {
+    this.$store.commit("init","http://127.0.0.1:3601");
+  },
 }
 </script>
 

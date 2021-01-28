@@ -2,24 +2,24 @@
 <div>
     <el-row>
         <!-- 添加节点 -->
-        <el-col :span="8">
+        <el-col :span="6">
             <h3>添加redis节点</h3>
-            <el-form ref="node" :model="node" label-width="65px">
-                <el-form-item label="name" prop="name">
-                    <el-input v-model="this.node.name" />
+            <el-form ref="node" :model="this.node" label-width="70px">
+                <el-form-item label="nodeName" prop="nodeName">
+                    <el-input v-model="node.nodeName" />
                 </el-form-item>
                 <el-form-item label="host" prop="host">
-                    <el-input v-model="this.node.host" />
+                    <el-input v-model="node.host" />
                 </el-form-item>
                 <el-form-item label="port" prop="port">
-                    <el-input v-model="this.node.port" />
+                    <el-input v-model="node.port" />
                 </el-form-item>
                 <el-form-item label="password" prop="password">
-                    <el-input v-model="this.node.password" />
+                    <el-input v-model="node.password" />
                 </el-form-item>
                 <el-form-item>
-                    <el-button plain @click="addNode">检查</el-button>
-                    <el-button plain>添加</el-button>
+                    <el-button plain @click="checkNode">检查</el-button>
+                    <el-button plain @click="addNode">添加</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
@@ -49,7 +49,7 @@ export default {
                 nodes:[]
             },
             node: {
-                nodeIndex:"",
+                nodeIndex:"1",
                 nodeName:"",
                 host:"",
                 port:"",
@@ -58,6 +58,15 @@ export default {
         }
     },
     methods: {
+        checkNode() {
+            console.log(this.$store.state.addr);
+            this.$http.post(this.$store.state.url.check,this.node,{emulateJSON:false})
+                .then((response) => {
+                    console.log(response);
+                },(err) => {
+                    console.log(err);
+                });
+        },
         addNode() {
             let node = this.node;
             this.prop.nodes.push(node);
